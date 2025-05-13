@@ -1,6 +1,6 @@
 {
-  "ArduinoPIN1": "off",
-  "ArduinoPIN2": "off",
+  "ArduinoPIN1": "on",
+  "ArduinoPIN2": "on",
   "ArduinoPIN3": "off",
   "ArduinoPIN4": "off"
 }

@@ -17,7 +17,7 @@ void setup() {
   Serial.begin(9600);
   Serial.println(F("Iniciando Ethernet..."));
 
-  if (ether.begin(sizeof Ethernet::buffer, mymac, 10) == 0) {
+  if (ether.begin(sizeof Ethernet::buffer, mymac, 53) == 0) {
     Serial.println(F("Fallo inicialización Ethernet"));
     while (1);
   }
@@ -55,7 +55,7 @@ void loop() {
     if (ether.dnsLookup(website)) {
       ether.printIp("IP de GitHub:", ether.hisip);
 
-      ether.browseUrl(PSTR("/turepositorio/"), "estado.txt", website, callback);
+      ether.browseUrl(PSTR("/Arduino_10_SE/"), "estado.txt", website, callback);
     } else {
       Serial.println(F("Error al resolver DNS"));
     }

@@ -19,7 +19,7 @@
 
   <script>
     async function cambiarEstado(pin) {
-      const url = 'https://raw.githubusercontent.com/TU_USUARIO/TU_REPOSITORIO/main/estado.json';
+      const url = 'https://raw.githubusercontent.com/gamenrick/Arduino_10_SE/main/estado.json';
       const respuesta = await fetch(url + '?nocache=' + Math.random()); // evitar caché
       const estados = await respuesta.json();
       estados[pin] = estados[pin] === 'on' ? 'off' : 'on';
