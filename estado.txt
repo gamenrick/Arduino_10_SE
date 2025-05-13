@@ -1,0 +1,4 @@
+LED1=on
+LED2=off
+RELE=on
+ALARMA=off
