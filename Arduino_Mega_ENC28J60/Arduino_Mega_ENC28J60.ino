@@ -6,12 +6,12 @@
 #define RELE     6
 #define ALARMA   7
 
-const char website[] PROGMEM = "gamenrick.github.io"; // Cambia esto por tu usuario real
+const char website[] PROGMEM = "script.google.com"; // Cambia esto por tu usuario real
 byte Ethernet::buffer[700];
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
 
 unsigned long tiempoAnterior = 0;
-const unsigned long intervalo = 15000; // 15 segundos
+const unsigned long intervalo = 1000; // 15 segundos
 
 void setup() {
   Serial.begin(9600);
@@ -55,7 +55,7 @@ void loop() {
     if (ether.dnsLookup(website)) {
       ether.printIp("IP de GitHub:", ether.hisip);
 
-      ether.browseUrl(PSTR("/Arduino_10_SE/"), "estado.txt", website, callback);
+      ether.browseUrl(PSTR("/macros/s/AKfycbz3D_tBnATdKHlzugU9AR0aWMhs26ZOInYpT-3XskHpAJu0AXlAVIbVjxCa93sAx7hBEQ/exec"), "estado.txt", website, callback);
     } else {
       Serial.println(F("Error al resolver DNS"));
     }

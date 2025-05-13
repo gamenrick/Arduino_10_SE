@@ -2,31 +2,42 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Control Arduino desde Web</title>
+  <title>Control desde Web</title>
   <style>
     body { background-color: black; color: white; font-family: Arial; text-align: center; }
     button { font-size: 1.5em; margin: 10px; padding: 10px 20px; }
   </style>
 </head>
 <body>
-  <h1>Control Remoto desde GitHub Pages</h1>
-  <p>Haz clic para encender o apagar cada módulo:</p>
-
-  <button onclick="cambiarEstado('ArduinoPIN1')">Toggle LED 1</button>
-  <button onclick="cambiarEstado('ArduinoPIN2')">Toggle LED 2</button>
-  <button onclick="cambiarEstado('ArduinoPIN3')">Toggle Relevador</button>
-  <button onclick="cambiarEstado('ArduinoPIN4')">Toggle Alarma</button>
+  <h1>Control de Arduino desde Google Sheets</h1>
+  <button onclick="cambiarEstado('LED1')">Toggle LED 1</button>
+  <button onclick="cambiarEstado('LED2')">Toggle LED 2</button>
+  <button onclick="cambiarEstado('RELE')">Toggle Relevador</button>
+  <button onclick="cambiarEstado('ALARMA')">Toggle Alarma</button>
 
   <script>
-    async function cambiarEstado(pin) {
-      const url = 'https://raw.githubusercontent.com/gamenrick/Arduino_10_SE/main/estado.json';
-      const respuesta = await fetch(url + '?nocache=' + Math.random()); // evitar caché
-      const estados = await respuesta.json();
-      estados[pin] = estados[pin] === 'on' ? 'off' : 'on';
+    const URL = 'https://script.google.com/macros/s/AKfycbz3D_tBnATdKHlzugU9AR0aWMhs26ZOInYpT-3XskHpAJu0AXlAVIbVjxCa93sAx7hBEQ/exec'; // <-- reemplaza con tu URL real
 
-      // Aquí deberías enviar un pull request a GitHub para modificar el JSON (o usar backend externo)
-      alert(`El estado de ${pin} se cambió a ${estados[pin]}. Ahora el Arduino lo consultará.`);
-      // Esto necesita un backend para persistir cambios reales. Alternativas: Firebase, Google Sheets, etc.
+    async function cambiarEstado(modulo) {
+      const estados = await obtenerEstados();
+      const nuevoEstado = estados[modulo] === 'on' ? 'off' : 'on';
+
+      const urlUpdate = `${URL}?update=true&modulo=${modulo}&estado=${nuevoEstado}`;
+      const respuesta = await fetch(urlUpdate);
+      const texto = await respuesta.text();
+      alert(texto);
+    }
+
+    async function obtenerEstados() {
+      const respuesta = await fetch(URL);
+      const texto = await respuesta.text();
+      const lineas = texto.trim().split('\n');
+      const estados = {};
+      lineas.forEach(linea => {
+        const [clave, valor] = linea.split('=');
+        estados[clave] = valor;
+      });
+      return estados;
     }
   </script>
 </body>
